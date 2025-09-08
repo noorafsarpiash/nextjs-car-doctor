@@ -1,10 +1,12 @@
-import dbConnect from '@/lib/dbConnect'
+import dbConnect, { collectonNameObj } from '@/lib/dbConnect'
 import Image from 'next/image'
+import Link from 'next/link';
 import React from 'react'
+import { FaArrowRight } from 'react-icons/fa';
 
 export default async function ServicesSection() {
     // const res = await fetch("/services.json");
-    const servicesCollection = dbConnect("test_services");
+    const servicesCollection = dbConnect(collectonNameObj.servicesCollection);
     const data = await servicesCollection.find({}).toArray();
 
 
@@ -23,10 +25,20 @@ export default async function ServicesSection() {
                                 alt={item.title} />
                         </figure>
                         <div className='flex justify-between items-center mt-4'>
+                            <div>
+                                <div className='flex justify-between items-center mt-4'>
 
+                                </div>
+                                <h3 className='text-3xl font-bold text-black-400 mt-2 '>{item.title}</h3>
+                                <p className='text-2xl text-orange-400 font-semibold mt-2'>Price:{item.price}</p>
+                            </div>
+
+                            <div>
+                                <Link href={`/services/${item._id}`} className='text-orange-500'>
+                                    <FaArrowRight />
+                                </Link>
+                            </div>
                         </div>
-                        <h3 className='text-3xl font-bold text-black-400 mt-2 '>{item.title}</h3>
-                        <p className='text-2xl text-orange-400 font-semibold mt-2'>Price:{item.price}</p>
 
                     </div>
                 )
